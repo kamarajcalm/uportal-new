@@ -3,6 +3,9 @@ import { Text, View, StyleSheet } from 'react-native';
 import * as Font from 'expo-font';
 import AppNavigator from './Navigation/AppNavigator';
 import { AppearanceProvider } from 'react-native-appearance';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
 export default class App extends React.Component {
   state = {
     fontsLoaded: false,
@@ -27,9 +30,12 @@ export default class App extends React.Component {
     if (this.state.fontsLoaded) {
       return (
         <AppearanceProvider>
-          <AppNavigator />
+          <Provider store={createStore(reducers)}>
+        
+              <AppNavigator />
+        
+          </Provider>
         </AppearanceProvider>
-       
       );
     } else {
       return null;

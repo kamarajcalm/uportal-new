@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import {
     NavigationContainer, DefaultTheme,
     DarkTheme,} from '@react-navigation/native';
@@ -18,36 +18,51 @@ import SportsStacks from '../stacks/SportsStacks';
 import Admissions from '../Screens/Admissions';
 import AdmissionsStack from '../stacks/AdmissionsStack';
 import { Appearance, useColorScheme } from 'react-native-appearance';
+import { connect } from 'react-redux';
+import { selectTheme } from '../actions';
+import ProfileStack from '../stacks/ProfileStack';
 const Tab = createBottomTabNavigator();
-export default function AppNavigator () {
-    const colorScheme = useColorScheme();
-    return (
-        <NavigationContainer >
-            <Tab.Navigator 
-                tabBar={props => <MyTabBar {...props} />}
-            >
-                <Tab.Screen name="universal" component={HomeStack} 
-                   
-                
-                />
-                <Tab.Screen name="Media" component={MediaStack} 
-             
-                
-                />
-                <Tab.Screen name="QuestionPapers" component={QuestionPapersStack} 
-                  
-                
-                />
-                <Tab.Screen name="Sports" component={SportsStacks} 
-                 
-                
-                />
-                <Tab.Screen name="Admissions" component={AdmissionsStack}
-                 
 
-                />
-            </Tab.Navigator>
-        </NavigationContainer>
-    );
+
+import TabNavigator from '../components/TabNavigator';
+import DefaultScreen from '../Screens/DefaultScreen';
+const Stack = createStackNavigator();
+ class AppNavigator extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        login:true
+    };
+  }
+     getTheme = async()=>{
+        // let theme = await AsyncStorage.getItem("theme")
+        let theme = Appearance.getColorScheme()
+        this.props.selectTheme(theme)
+     }
+  componentDidMount(){
+      this._schemeSubscription = Appearance.addChangeListener(({ colorScheme }) => {
+          console.log(colorScheme, "pppp");
+          this.props.selectTheme(colorScheme)
+      });
+      this.getTheme()
+  }
   
+  render() {
+      return (
+          <NavigationContainer >
+              <Stack.Navigator>
+                  <Stack.Screen name="DefaultScreen" component={DefaultScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Tab" component={TabNavigator} options={{ headerShown: false }} />
+              </Stack.Navigator>
+          </NavigationContainer>
+      );
+  }
 }
+const mapStateToProps = (state) => {
+
+    return {
+        theme: state.selectedTheme,
+
+    }
+}
+export default connect(mapStateToProps, { selectTheme })(AppNavigator)

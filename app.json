@@ -6,9 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/UportalSplash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000"
     },
     "userInterfaceStyle": "automatic",
     "updates": {
@@ -22,9 +22,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/UportalLogo.png",
+        "backgroundColor": "#000"
+      },
+      "package": "com.poa.uportal"
     },
     "web": {
       "favicon": "./assets/favicon.png"
