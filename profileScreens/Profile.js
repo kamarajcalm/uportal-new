@@ -10,12 +10,13 @@ const height = Dimensions.get("window").height
 const screenHeight = Dimensions.get("screen").height
 const lightTheme = settings.lightTheme
 const darkTheme = settings.darkTheme
-import data from '../data/ProfileData';
+import data from '../data/ProfileDataCollegeStudent';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 class Profile extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+   
         };
     }
 componentDidMount(){
@@ -33,6 +34,7 @@ componentWillUnmount(){
     this._subscribe()
 }
     navigate =(item)=>{
+
         if (item.name =="STATISTICS"){
             return this.props.navigation.navigate('Statistics')
         }
@@ -119,7 +121,7 @@ componentWillUnmount(){
                             renderItem ={({item,index})=>{
                                    return(
                                        <TouchableOpacity style={{height:height*0.07,backgroundColor:theme.backgroundColor,flexDirection:"row"}}
-                                        onPress ={()=>{this.navigate(item)}}
+                                        onPress ={()=>{this.props.navigation.navigate(item.navigate)}}
                                        >
                                              <View style={{flex:0.2,alignItems:"center",justifyContent:"center"}}>
                                                 <Image 

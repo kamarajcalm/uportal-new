@@ -6,6 +6,8 @@ import Media from '../Screens/Media';
 import Sports from '../Screens/Sports';
 import Profile from '../profileScreens/Profile';
 import Statistics from '../profileScreens/Statistics';
+import AttendanceCollegeStudent from '../profileScreens/CollegeStudent/AttendanceCollegeStudent';
+import { TransitionSpecs, CardStyleInterpolators } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 export default class ProfileStack extends Component {
     constructor(props) {
@@ -16,9 +18,19 @@ export default class ProfileStack extends Component {
 
     render() {
         return (
-            <Stack.Navigator>
+            <Stack.Navigator 
+                screenOptions={{
+                    transitionSpec: {
+                        open: TransitionSpecs.TransitionIOSSpec,
+                        close: TransitionSpecs.TransitionIOSSpec,
+                    },
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+
+                }}
+            >
                 <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
                 <Stack.Screen name="Statistics" component={Statistics} options={{ headerShown: false }} />
+                <Stack.Screen name="AttendanceCollegeStudent" component={AttendanceCollegeStudent} options={{ headerShown: false }} />
 
             </Stack.Navigator>
         );

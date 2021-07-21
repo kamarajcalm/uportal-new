@@ -24,7 +24,7 @@ const viewabilityConfig = {
 const color = Appearance.getColorScheme()
 const fontFamily = settings.fontFamily
 const { diffClamp } = Animated;
-const headerHeight = height * 0.14;
+const headerHeight = height * 0.17;
 class HomePage extends React.PureComponent {
     constructor(props) {
        
@@ -167,7 +167,10 @@ class HomePage extends React.PureComponent {
             <>
             <View style={{ flex: 1,backgroundColor:theme.backgroundColor,}}>
                     {/* HEADERS */}
-                    <View style={[{height:height*0.1,backgroundColor:theme.backgroundColor,flexDirection:"row"}]}>
+                    <Animated.View style={[styles.header, { transform: [{ translateY }], backgroundColor: theme.backgroundColor,height:height*0.17 }]}>
+
+                   
+                    <View style={[{height:height*0.1,flexDirection:"row"}]}>
                             <View style={{flex:0.2,alignItems:"center",justifyContent:"center"}}>
                                 <Ionicons name="notifications-outline" size={24} color={theme.secondaryColor} />
                             </View>
@@ -178,6 +181,46 @@ class HomePage extends React.PureComponent {
                                 <Ionicons name="search" size={24} color={theme.secondaryColor} />
                             </View>
                     </View>
+                        <View >
+                            <View style={{ height: height * 0.07, flexDirection: "row", marginTop: 10, backgroundColor: theme.backgroundColor }}>
+                                <View style={{ flex: 0.3, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image
+                                        source={require('../assets/unknownPerson.jpg')}
+                                        style={{ height: 50, width: 50, borderRadius: 25 }}
+                                    />
+                                </View>
+                                <View style={{ flex: 0.7, justifyContent: "center" }}>
+                                    <Text style={[styles.text, { color: theme.TextColor }]}>What's on your mind?</Text>
+                                </View>
+                            </View>
+                            <View style={{ height: height * 0.07, backgroundColor: theme.backgroundColor, flexDirection: "row" }}>
+                                <View style={{ flex: 0.5, alignItems: 'center', justifyContent: "center" }}>
+                                    <TouchableOpacity style={{ flexDirection: "row" }}>
+                                        <View>
+                                            <FontAwesome5 name="photo-video" size={24} color={theme.secondaryColor} />
+                                        </View>
+                                        <View style={{ marginLeft: 10, alignItems: "center", justifyContent: "center" }}>
+                                            <Text style={[styles.text, { color: theme.TextColor }]}>PHOTO / VIDEOS</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.5, alignItems: 'center', justifyContent: "center" }}>
+                                    <TouchableOpacity
+
+                                        style={{ flexDirection: "row" }}
+                                    >
+                                        <View>
+                                            <Entypo name="folder-images" size={24} color={theme.secondaryColor} />
+                                        </View>
+                                        <View style={{ marginLeft: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={[styles.text, { color: theme.TextColor }]}>MY WALL</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                 
+                    </Animated.View>
                                       {/* Details */}
                               
                
@@ -196,7 +239,7 @@ class HomePage extends React.PureComponent {
                         viewabilityConfig={viewabilityConfig}
                         removeClippedSubviews={true}
                         onScroll={handleScroll}
-                       onMomentumScrollEnd={handleSnap}
+                    //    onMomentumScrollEnd={handleSnap}
                         data={data}
                         ref={ref => this.ref = ref}
                         keyExtractor ={(item,index)=>index.toString()}
@@ -226,44 +269,7 @@ class HomePage extends React.PureComponent {
                     this.bottomModal(theme)
                 }
         
-                <Animated.View style={{ position: "absolute", top: height * 0.1-StatusBar.currentHeight, height: height * 0.14, width, transform: [{ translateY }]}}>
-                    <View style={{ height: height * 0.07, flexDirection: "row", marginTop: 10, backgroundColor: theme.backgroundColor }}>
-                        <View style={{ flex: 0.3, alignItems: 'center', justifyContent: 'center' }}>
-                            <Image
-                                source={require('../assets/unknownPerson.jpg')}
-                                style={{ height: 50, width: 50, borderRadius: 25 }}
-                            />
-                        </View>
-                        <View style={{ flex: 0.7, justifyContent: "center" }}>
-                            <Text style={[styles.text, { color: theme.TextColor }]}>What's on your mind?</Text>
-                        </View>
-                    </View>
-                    <View style={{ height: height * 0.07, backgroundColor: theme.backgroundColor, flexDirection: "row" }}>
-                        <View style={{ flex: 0.5, alignItems: 'center', justifyContent: "center" }}>
-                            <TouchableOpacity style={{ flexDirection: "row" }}>
-                                <View>
-                                    <FontAwesome5 name="photo-video" size={24} color={theme.secondaryColor} />
-                                </View>
-                                <View style={{ marginLeft: 10, alignItems: "center", justifyContent: "center" }}>
-                                    <Text style={[styles.text, { color: theme.TextColor }]}>PHOTO / VIDEOS</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 0.5, alignItems: 'center', justifyContent: "center" }}>
-                            <TouchableOpacity
-
-                                style={{ flexDirection: "row" }}
-                            >
-                                <View>
-                                    <Entypo name="folder-images" size={24} color={theme.secondaryColor} />
-                                </View>
-                                <View style={{ marginLeft: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={[styles.text, { color: theme.TextColor }]}>MY WALL</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Animated.View>
+           
             </>
         );
     }
@@ -286,7 +292,22 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
         justifyContent: 'flex-end',
         width: width
-    }
+    },
+    header: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        width: '100%',
+        zIndex: 1,
+        elevation: 6,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.12,
+        shadowRadius: 60,
+    },
 
 })
 const mapStateToProps = (state) => {

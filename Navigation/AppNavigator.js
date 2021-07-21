@@ -37,10 +37,13 @@ const Stack = createStackNavigator();
      getTheme = async()=>{
         // let theme = await AsyncStorage.getItem("theme")
         let theme = Appearance.getColorScheme()
+        console.log(theme,"ppppppppp")
         this.props.selectTheme(theme)
      }
   componentDidMount(){
+
       this._schemeSubscription = Appearance.addChangeListener(({ colorScheme }) => {
+       
           console.log(colorScheme, "pppp");
           this.props.selectTheme(colorScheme)
       });

@@ -1,0 +1,81 @@
+import React, { Component } from 'react';
+import { View, Text, SafeAreaView, StyleSheet, Dimensions, StatusBar, ScrollView, FlatList, Image, TextInput, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { selectTheme } from '../../actions';
+import settings from '../../appSettings';
+import Header from '../../components/Header';
+import DropDownPicker from 'react-native-dropdown-picker';
+import * as ImagePicker from 'expo-image-picker';
+import Modal from 'react-native-modal';
+import { Ionicons, Entypo, AntDesign, Feather, MaterialCommunityIcons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
+const fontFamily = settings.fontFamily
+const width = Dimensions.get('screen').width
+const height = Dimensions.get("window").height
+const screenHeight = Dimensions.get("screen").height
+const lightTheme = settings.lightTheme
+const darkTheme = settings.darkTheme
+
+class Attendance extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+       
+        };
+    }
+
+    render() {
+        let theme;
+        if (this.props.theme == "dark") {
+            theme = darkTheme
+        } else {
+            theme = lightTheme
+        }
+        const { open, value, degree, branch, open2, value2 } = this.state;
+        return (
+            <>
+                <StatusBar backgroundColor={theme.backgroundColor} barStyle={this.props.theme == "dark" ? "light-content" : "dark-content"} />
+                <SafeAreaView style={[styles.topSafeArea, { backgroundColor: theme.backgroundColor }]} />
+                <SafeAreaView style={[styles.bottomSafeArea, { backgroundColor: theme.backgroundColor }]}>
+                    <Header navigation={this.props.navigation} title={"ATTENDANCE"} />
+                    <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
+                   
+                    </View>
+
+                </SafeAreaView>
+            </>
+        );
+    }
+}
+const styles = StyleSheet.create({
+    text: {
+        fontFamily
+    },
+    topSafeArea: {
+        flex: 0,
+    },
+    bottomSafeArea: {
+        flex: 1,
+
+    },
+    modalView1: {
+        backgroundColor: '#fff',
+        marginHorizontal: 0,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+        justifyContent: 'flex-end',
+        width: width
+    }
+})
+const mapStateToProps = (state) => {
+
+    return {
+        theme: state.selectedTheme,
+
+    }
+}
+const mapActionToProps = {
+
+    selectTheme
+
+}
+export default connect(mapStateToProps, mapActionToProps)(Attendance)
